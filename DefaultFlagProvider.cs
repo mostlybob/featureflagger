@@ -22,4 +22,19 @@ namespace FeatureFlag
             return Convert.ToBoolean(featureSetting);
         }
     }
+
+    public class JsonFlagProvider : IFlagProvider
+    {
+        private readonly IFeatureStore featureStore;
+
+        public JsonFlagProvider()
+        {
+            featureStore = new JsonFeatureStore();
+        }
+
+        public bool GetFlagSetting(string flagName)
+        {
+            return featureStore.GetFeatureSetting(flagName);
+        }
+    }
 }
