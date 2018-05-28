@@ -21,7 +21,7 @@ namespace FeatureFlag
     {
         private readonly IConfigurationBuilder builder;
         private readonly IConfiguration configuration;
-        
+
 
         public JsonFeatureStore()
         {
@@ -33,6 +33,7 @@ namespace FeatureFlag
         }
         public bool GetFeatureSetting(string featureName)
         {
+            var setting = configuration[featureName];
 
             return true;
         }
