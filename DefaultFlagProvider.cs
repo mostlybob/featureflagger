@@ -1,3 +1,5 @@
+using System;
+
 namespace FeatureFlag
 {
     public interface IFlagProvider
@@ -7,10 +9,17 @@ namespace FeatureFlag
 
     public class DefaultFlagProvider : IFlagProvider
     {
+        private readonly IFeatureStore featureStore;
+
+        public DefaultFlagProvider()
+        {
+            featureStore = new DefaultFeatureStore();
+        }
+
         public bool GetFlagSetting(string flagName)
         {
-            //I'd get it from the config
-            return false;
+            var featureSetting=featureStore.GetFeatureSetting(flagName);
+            return Convert.ToBoolean(featureSetting);
         }
     }
 }
