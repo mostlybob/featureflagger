@@ -20,6 +20,12 @@ namespace FeatureFlag
         {
             flagProvider = new DefaultFlagProvider();
         }
+
+        public FlagAttrTest(IFlagProvider flagProvider)
+        {
+            this.flagProvider = flagProvider;
+        }
+
         public string TestMethod()
         {
             var flagName = "testFlag";
