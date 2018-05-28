@@ -7,7 +7,10 @@ namespace FeatureFlag
         static void Main(string[] args)
         {
             var flagTest = new FlagAttrTest();
-            Console.WriteLine(flagTest.TestMethod());
+            Console.WriteLine($"Running Default: {flagTest.TestMethod()}");
+
+            flagTest = new FlagAttrTest(new JsonFlagProvider());
+            Console.WriteLine($"Running Json: {flagTest.TestMethod()}");
         }
     }
 
