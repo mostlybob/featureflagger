@@ -6,14 +6,14 @@ namespace FeatureFlag
 {
     interface IFeatureStore
     {
-        bool GetFeatureSetting(string featureName);
+        string GetFeatureSetting(string featureName);
     }
 
     class DefaultFeatureStore : IFeatureStore
     {
-        public bool GetFeatureSetting(string featureName)
+        public string GetFeatureSetting(string featureName)
         {
-            return true;
+            return "true";
         }
     }
 
@@ -31,11 +31,11 @@ namespace FeatureFlag
 
             configuration = builder.Build();
         }
-        public bool GetFeatureSetting(string featureName)
+        public string GetFeatureSetting(string featureName)
         {
             var setting = configuration[featureName];
 
-            return true;
+            return "true";
         }
     }
 }

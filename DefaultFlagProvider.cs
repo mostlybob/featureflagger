@@ -34,7 +34,7 @@ namespace FeatureFlag
 
         public bool GetFlagSetting(string flagName)
         {
-            return featureStore.GetFeatureSetting(flagName);
+            return Convert.ToBoolean(featureStore.GetFeatureSetting(flagName));
         }
     }
 }
