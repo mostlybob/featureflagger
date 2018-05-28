@@ -34,8 +34,7 @@ namespace FeatureFlag
         public string GetFeatureSetting(string featureName)
         {
             var setting = configuration[featureName];
-
-            return "true";
+            return setting;
         }
     }
 }

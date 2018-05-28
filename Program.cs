@@ -19,7 +19,7 @@ namespace FeatureFlag
 
             foreach (var flag in flags)
             {
-                Console.WriteLine($"Running Json provider for : {jsonProvider.GetFlagSetting(flag)}");
+                Console.WriteLine($"Running Json provider for {flag}: {jsonProvider.GetFlagSetting(flag)}");
             }
         }
     }
