@@ -3,6 +3,9 @@
 
 .vscode
 
+# pretty sure this is an artifact from dolphin
+.directory
+
 # User-specific files
 *.suo
 *.user
