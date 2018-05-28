@@ -1,15 +1,40 @@
+using System;
+using System.IO;
+using Microsoft.Extensions.Configuration;
+
 namespace FeatureFlag
 {
     interface IFeatureStore
     {
-        string GetFeatureSetting(string featureName);
+        bool GetFeatureSetting(string featureName);
     }
-    
+
     class DefaultFeatureStore : IFeatureStore
     {
-        public string GetFeatureSetting(string featureName)
+        public bool GetFeatureSetting(string featureName)
         {
-            return "true";
+            return true;
+        }
+    }
+
+    public class JsonFeatureStore : IFeatureStore
+    {
+        private readonly IConfigurationBuilder builder;
+        private readonly IConfiguration configuration;
+        
+
+        public JsonFeatureStore()
+        {
+            builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("FeatureFlags.json");
+
+            configuration = builder.Build();
+        }
+        public bool GetFeatureSetting(string featureName)
+        {
+
+            return true;
         }
     }
 }
