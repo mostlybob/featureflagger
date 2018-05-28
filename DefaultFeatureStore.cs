@@ -19,22 +19,17 @@ namespace FeatureFlag
 
     public class JsonFeatureStore : IFeatureStore
     {
-        private readonly IConfigurationBuilder builder;
         private readonly IConfiguration configuration;
-
 
         public JsonFeatureStore()
         {
-            builder = new ConfigurationBuilder()
+            configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("FeatureFlags.json");
-
-            configuration = builder.Build();
+            .AddJsonFile("FeatureFlags.json").Build();
         }
         public string GetFeatureSetting(string featureName)
         {
-            var setting = configuration[featureName];
-            return setting;
+            return configuration[featureName];
         }
     }
 }

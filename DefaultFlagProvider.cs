@@ -18,8 +18,7 @@ namespace FeatureFlag
 
         public bool GetFlagSetting(string flagName)
         {
-            var featureSetting = featureStore.GetFeatureSetting(flagName);
-            return Convert.ToBoolean(featureSetting);
+            return Convert.ToBoolean(featureStore.GetFeatureSetting(flagName));
         }
     }
 
