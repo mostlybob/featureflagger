@@ -37,21 +37,9 @@ namespace FeatureFlag.Tests
         }
 
         [Fact]
-        public void It_should_call_the_store_with_the_key()
-        {
-            SetupMock(It.IsAny<string>(), "True");
-
-            providerTest = new FlagProvider(mockFeatureStore.Object);
-
-            providerTest.GetFlagSetting(testKey);
-
-            mockFeatureStore.Verify(xx => xx.GetFeatureSetting(It.IsAny<string>()), Times.Once);
-        }
-
-        [Fact]
         public void It_should_call_the_store_with_the_passed_key()
         {
-            SetupMock(It.IsAny<string>(), "True");
+            SetupMock(testKey, "True");
 
             providerTest = new FlagProvider(mockFeatureStore.Object);
 
