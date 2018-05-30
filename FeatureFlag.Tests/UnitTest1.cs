@@ -29,7 +29,6 @@ namespace FeatureFlag.Tests
         [Fact]
         public void It_should_return_false_for_non_existent_key()
         {
-            // var featureStoreMock = new Mock<IFeatureStore>();
             SetupMock("bogus", null);
 
             providerTest = new FlagProvider(mockFeatureStore.Object);
