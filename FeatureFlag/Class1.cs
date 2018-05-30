@@ -11,11 +11,6 @@ namespace FeatureFlag
     {
         private readonly IFeatureStore featureStore;
 
-        public FlagProvider()
-        {
-
-        }
-
         public FlagProvider(IFeatureStore featureStore)
         {
             this.featureStore = featureStore;

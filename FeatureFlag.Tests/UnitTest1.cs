@@ -18,14 +18,15 @@ namespace FeatureFlag.Tests
             featureStoreMock
             .Setup(yy => yy.GetFeatureSetting(It.IsAny<string>()))
             .Returns("True");
-
-            providerTest = new Mock<FlagProvider>().Object;
-
         }
 
         [Fact]
-        public void Nonexistent_key_should_be_false()
+        public void It_should_return_false_for_non_existent_key()
         {
+            var featureStoreMock = new Mock<IFeatureStore>();
+            
+            providerTest=new FlagProvider(featureStoreMock.Object);
+            
             providerTest.GetFlagSetting("bogus").ShouldBeFalse();
         }
 
