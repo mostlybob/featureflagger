@@ -19,16 +19,32 @@ namespace FeatureFlag.Tests
             .Setup(yy => yy.GetFeatureSetting(It.IsAny<string>()))
             .Returns("True");
 
-
+            providerTest = new Mock<FlagProvider>().Object;
 
         }
 
         [Fact]
         public void Nonexistent_key_should_be_false()
         {
-            providerTest = new Mock<FlagProvider>().Object;
-
             providerTest.GetFlagSetting("bogus").ShouldBeFalse();
         }
+
+        [Fact]
+        public void It_should_call_the_store_with_the_key()
+        {
+            var key = System.Guid.NewGuid().ToString();
+            var featureStoreMock = new Mock<IFeatureStore>();
+
+            featureStoreMock
+            .Setup(yy => yy.GetFeatureSetting(It.IsAny<string>()))
+            .Returns("True");
+
+            providerTest = new FlagProvider(featureStoreMock.Object);
+
+            providerTest.GetFlagSetting(key);
+
+            featureStoreMock.Verify(xx=>xx.GetFeatureSetting(It.IsAny<string>()),Times.Once);
+        }
+
     }
 }
