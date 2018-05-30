@@ -70,5 +70,17 @@ namespace FeatureFlag.Tests
             providerTest.GetFlagSetting(testKey).ShouldBeTrue();
         }
 
+        [Fact]
+        public void It_should_find_an_existing_false_key()
+        {
+            SetupMock(testKey, "False");
+
+            new FlagProvider(mockFeatureStore.Object)
+            .GetFlagSetting(testKey)
+            .ShouldBeFalse();
+
+            mockFeatureStore
+            .Verify(xx => xx.GetFeatureSetting(testKey), Times.Once);
+        }
     }
 }
