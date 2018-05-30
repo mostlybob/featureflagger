@@ -10,7 +10,7 @@ namespace FeatureFlag.Tests
     {
         private string testKey;
         private IFlagProvider providerTest;
-        private Mock<IFeatureStore> mockFeatureStore;
+        private Mock<Func<IFeatureStore>> mockFeatureStore;
 
         public ProviderTests()
         {
@@ -19,10 +19,10 @@ namespace FeatureFlag.Tests
 
         private void SetupMock(string key, string returnValue)
         {
-            mockFeatureStore = new Mock<IFeatureStore>();
+            mockFeatureStore = new Mock<Func<IFeatureStore>>();
 
             mockFeatureStore
-            .Setup(yy => yy.GetFeatureSetting(key))
+            .Setup(yy => yy().GetFeatureSetting(key))
             .Returns(returnValue);
         }
 
@@ -45,7 +45,7 @@ namespace FeatureFlag.Tests
 
             providerTest.GetFlagSetting(testKey);
 
-            mockFeatureStore.Verify(xx => xx.GetFeatureSetting(testKey), Times.Once);
+            mockFeatureStore.Verify(xx => xx().GetFeatureSetting(testKey), Times.Once);
         }
 
         [Fact]
@@ -68,7 +68,7 @@ namespace FeatureFlag.Tests
             .ShouldBeFalse();
 
             mockFeatureStore
-            .Verify(xx => xx.GetFeatureSetting(testKey), Times.Once);
+            .Verify(xx => xx().GetFeatureSetting(testKey), Times.Once);
         }
     }
 }

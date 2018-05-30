@@ -9,16 +9,16 @@ namespace FeatureFlag
 
     public class FlagProvider : IFlagProvider
     {
-        private readonly IFeatureStore featureStore;
+        private readonly Func<IFeatureStore> featureStore;
 
-        public FlagProvider(IFeatureStore featureStore)
+        public FlagProvider(Func<IFeatureStore> featureStore)
         {
             this.featureStore = featureStore;
         }
 
         public bool GetFlagSetting(string flagName)
         {
-            var setting = featureStore.GetFeatureSetting(flagName);
+            var setting = featureStore().GetFeatureSetting(flagName);
 
             return Convert.ToBoolean(setting);
         }
