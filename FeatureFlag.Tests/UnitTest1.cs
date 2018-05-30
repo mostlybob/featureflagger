@@ -51,6 +51,22 @@ namespace FeatureFlag.Tests
         }
 
         [Fact]
+        public void It_should_call_the_store_with_the_passed_key()
+        {
+                       var featureStoreMock = new Mock<IFeatureStore>();
+
+            featureStoreMock
+            .Setup(yy => yy.GetFeatureSetting(testKey))
+            .Returns("True");
+
+            providerTest = new FlagProvider(featureStoreMock.Object);
+
+            providerTest.GetFlagSetting(testKey);
+
+            featureStoreMock.Verify(xx => xx.GetFeatureSetting(testKey), Times.Once);
+        }
+
+        [Fact]
         public void It_should_return_true_when_store_returns_a_true_string()
         {
             var featureStoreMock = new Mock<IFeatureStore>();
