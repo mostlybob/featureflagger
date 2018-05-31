@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Xunit;
 using Moq;
 using FeatureFlag;
@@ -6,7 +6,7 @@ using Shouldly;
 
 namespace FeatureFlag.Tests
 {
-    public class ProviderTests
+   public class ProviderTests
     {
         private string testKey;
         private IFlagProvider providerTest;
@@ -58,17 +58,17 @@ namespace FeatureFlag.Tests
             providerTest.GetFlagSetting(testKey).ShouldBeTrue();
         }
 
-        [Fact]
-        public void It_should_find_an_existing_false_key()
-        {
-            SetupMock(testKey, "False");
+        // [Fact]
+        // public void It_should_find_an_existing_false_key()
+        // {
+        //     SetupMock(testKey, "False");
 
-            new FlagProvider(mockFeatureStore.Object)
-            .GetFlagSetting(testKey)
-            .ShouldBeFalse();
+        //     new FlagProvider(mockFeatureStore.Object)
+        //     .GetFlagSetting(testKey)
+        //     .ShouldBeFalse();
 
-            mockFeatureStore
-            .Verify(xx => xx().GetFeatureSetting(testKey), Times.Once);
-        }
+        //     mockFeatureStore
+        //     .Verify(xx => xx().GetFeatureSetting(testKey), Times.Once);
+        // }
     }
 }
