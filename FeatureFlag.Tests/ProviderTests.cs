@@ -6,11 +6,11 @@ using Shouldly;
 
 namespace FeatureFlag.Tests
 {
-   public class ProviderTests
+    public class ProviderTests
     {
         private string testKey;
         private IFlagProvider providerTest;
-        private Mock<Func<IFeatureStore>> mockFeatureStore;
+        private Mock<IFeatureStore> mockFeatureStore;
 
         public ProviderTests()
         {
@@ -19,10 +19,10 @@ namespace FeatureFlag.Tests
 
         private void SetupMock(string key, string returnValue)
         {
-            mockFeatureStore = new Mock<Func<IFeatureStore>>();
+            mockFeatureStore = new Mock<IFeatureStore>();
 
             mockFeatureStore
-            .Setup(yy => yy().GetFeatureSetting(key))
+            .Setup(yy => yy.GetFeatureSetting(key))
             .Returns(returnValue);
         }
 
@@ -31,7 +31,7 @@ namespace FeatureFlag.Tests
         {
             SetupMock("bogus", null);
 
-            providerTest = new FlagProvider(mockFeatureStore.Object);
+            providerTest = new FlagProvider(() => mockFeatureStore.Object);
 
             providerTest.GetFlagSetting("bogus").ShouldBeFalse();
         }
@@ -41,11 +41,11 @@ namespace FeatureFlag.Tests
         {
             SetupMock(testKey, "True");
 
-            providerTest = new FlagProvider(mockFeatureStore.Object);
+            providerTest = new FlagProvider(() => mockFeatureStore.Object);
 
             providerTest.GetFlagSetting(testKey);
 
-            mockFeatureStore.Verify(xx => xx().GetFeatureSetting(testKey), Times.Once);
+            mockFeatureStore.Verify(xx => xx.GetFeatureSetting(testKey), Times.Once);
         }
 
         [Fact]
@@ -53,22 +53,22 @@ namespace FeatureFlag.Tests
         {
             SetupMock(testKey, "True");
 
-            providerTest = new FlagProvider(mockFeatureStore.Object);
+            providerTest = new FlagProvider(() => mockFeatureStore.Object);
 
             providerTest.GetFlagSetting(testKey).ShouldBeTrue();
         }
 
-        // [Fact]
-        // public void It_should_find_an_existing_false_key()
-        // {
-        //     SetupMock(testKey, "False");
+        [Fact]
+        public void It_should_find_an_existing_false_key()
+        {
+            SetupMock(testKey, "False");
 
-        //     new FlagProvider(mockFeatureStore.Object)
-        //     .GetFlagSetting(testKey)
-        //     .ShouldBeFalse();
+            new FlagProvider(() => mockFeatureStore.Object)
+            .GetFlagSetting(testKey)
+            .ShouldBeFalse();
 
-        //     mockFeatureStore
-        //     .Verify(xx => xx().GetFeatureSetting(testKey), Times.Once);
-        // }
+            mockFeatureStore
+            .Verify(xx => xx.GetFeatureSetting(testKey), Times.Once);
+        }
     }
 }
