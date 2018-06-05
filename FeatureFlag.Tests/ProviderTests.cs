@@ -43,21 +43,13 @@ namespace FeatureFlag.Tests
 
             providerTest = new FlagProvider(() => mockFeatureStore.Object);
 
-            providerTest.GetFlagSetting(testKey);
+            var result = providerTest.GetFlagSetting(testKey);
 
             mockFeatureStore.Verify(xx => xx.GetFeatureSetting(testKey), Times.Once);
+
+            result.ShouldBeTrue();
         }
-
-        [Fact]
-        public void It_should_return_true_when_store_returns_a_true_string()
-        {
-            SetupMock(testKey, "True");
-
-            providerTest = new FlagProvider(() => mockFeatureStore.Object);
-
-            providerTest.GetFlagSetting(testKey).ShouldBeTrue();
-        }
-
+        
         [Fact]
         public void It_should_find_an_existing_false_key()
         {
